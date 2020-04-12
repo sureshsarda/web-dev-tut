@@ -1,0 +1,135 @@
+<html>
+
+<head>
+    <title>Neighbor Countries</title>
+    <!-- You can have custom fonts in your website -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Slabo+27px&display=swap" rel="stylesheet">
+
+    <!-- I have some CSS that is in the page and some CSS that is in a separate file. You can import 
+        the complete CSS like  this out your page:-->
+    <link rel="stylesheet" type="text/css" href="css/global.css">
+</head>
+
+<body>
+    <div class="row">
+        <div class="gutter">
+
+        </div>
+        <div class="header">Capital City</div>
+    </div>
+    <div class="row">
+        <div class="gutter accent-bg"></div>
+        <div class="content">
+            <p>How to play:</p>
+            <p>There are random cities and countries names. When you click on a country and then it's
+                capital, you get points. When you select incorrect sequence, you don't get any points.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="gutter">
+        </div>
+        <div id="values">
+            <!-- I'm passing the element as part of the function call
+                remember we used to do document.getElementById ?
+                The this method call pass the current element on which
+                the method is called.
+            -->
+            <div class="label" onclick="countryClicked(this)">India</div>
+            <div class="label" onclick="cityClicked(this)">Washington DC</div>
+            <div class="label" onclick="countryClicked(this)">USA</div>
+            <div class="label" onclick="countryClicked(this)">UK</div>
+            <div class="label" onclick="countryClicked(this)">Sri Lanka</div>
+            <div class="label" onclick="cityClicked(this)">London</div>
+            <div class="label" onclick="countryClicked(this)">Germany</div>
+            <div class="label" onclick="countryClicked(this)">China</div>
+            <div class="label" onclick="cityClicked(this)">Colombo</div>
+            <div class="label" onclick="cityClicked(this)">Berlin</div>
+            <div class="label" onclick="cityClicked(this)">New Delhi</div>
+            <div class="label" onclick="cityClicked(this)">Beijin</div>
+        </div>
+    </div>
+
+
+</body>
+<script>
+    // script that is not part of any function is evaluated automatically when the page loads
+
+    // these two arrays contain the valid pairs.
+    // The indexes of these arrays form a country-capital pair
+    var countries = ["India", "USA", "China", "UK", "Germany", "Sri Lanka"]
+    var capitals = ["New Delhi", "Washington DC", "Beijing", "London", "Berlin", "Colombo"]
+
+    // this is a temporary variable to keep the last clicked country which I have turned
+    // green. If answer is incorrect, I reset the color
+    var lastCountrySelected = null;
+
+    // this method takes two elements (note elements) and then check if they match in the array above
+    function checkIfMatch(countryEle, cityEle) {
+
+        var country = countryEle.innerHTML;
+        var city = cityEle.innerHTML;
+
+        // indexOf method returns the index at which that value is present in array
+        // otherwise it returns -1. Note array index cannot be -1, since they start at 0
+        var countryIndex = countries.indexOf(country);
+        var cityIndex = capitals.indexOf(city);
+        if (countryIndex == cityIndex) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // this method gets called when user click on a country
+    // if user has already clicked on a country, we clean the value
+    // otherwise we store the current value
+    // update the color accordingly
+    function countryClicked(element) {
+        if (lastCountrySelected != null) {
+            lastCountrySelected.style.backgroundColor = '#B0BEC5'; // gray
+        }
+        lastCountrySelected = element;
+        element.style.backgroundColor = '#66BB6A'; // green
+    }
+
+    function cityClicked(cityName) {
+        // only proceed if there is a country already selected
+        // do not proceed otherwise. There is no else.
+        if (lastCountrySelected != null) {
+            if (checkIfMatch(lastCountrySelected, cityName)) {
+                // answer is correct
+                lastCountrySelected.style.backgroundColor = '#66BB6A'; // green
+                cityName.style.backgroundColor = '#66BB6A'; // green
+                lastCountrySelected = null;
+            } else {
+                // answer is incorrect. reset color
+                lastCountrySelected.style.backgroundColor = '#B0BEC5';
+            }
+        }
+
+    }
+
+
+</script>
+
+<style>
+    #values {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 100px;
+    }
+
+    .label {
+        background-color: #B0BEC5;
+        padding: 10px;
+        border-radius: 10px;
+        margin: 10px;
+        width: 146px;
+        cursor: pointer;
+        text-align: center;
+    }
+</style>
+
+</html>
